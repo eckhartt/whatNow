@@ -1,13 +1,35 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
 import { List , ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import TaskIcon from '@mui/icons-material/Task';
-import {db} from '../Firebase.js';
+import { db } from '../Firebase.js';
 import { doc, deleteDoc } from "firebase/firestore";
-// import './TodoList.css';
+import { collection, onSnapshot, query, orderBy, where } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
 
 
-function TodoList({ todos }) {
+function TodoList() {
+  const [todos, setTodos] = useState([]); // Setup state for holding list of todo items
+
+  // Function to pull current list of todos from firebase
+  const getTodos = () => {
+      onSnapshot(query(collection(db,'tasks'),where('ownerId', '==', getAuth().currentUser.uid),orderBy('creationDate','desc')),(snapshot)=>{
+          console.log(`snapshot is`,snapshot);
+          const currentFirebaseTodos = [];
+          currentFirebaseTodos.push(snapshot.docs.map(doc=>({
+              id: doc.id,
+              item: doc.data()
+          })))
+          console.log(`currentFirebaseTodos[0] is`,currentFirebaseTodos[0]);
+          setTodos(currentFirebaseTodos[0]);
+      })
+  }
+
+    // Fill todos state on first render & attach snapshot
+    useEffect(() => {
+      getTodos();
+    }, []);
+
     return (
         <List className="todo__list">
           {todos.map((data) => (

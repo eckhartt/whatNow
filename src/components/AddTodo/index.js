@@ -1,14 +1,28 @@
 import React, { useState } from "react";
 import { TextField, Button } from '@mui/material';
+import { db } from '../Firebase.js';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getAuth } from "firebase/auth";
 
-
-function AddTodo({ saveTodo, getTodos }) {
+function AddTodo() {
+  
   const [input, setInput] = useState(""); // Setup state for task input field
+
+  // Function to save todo input field into firebase
+  const saveTodo = (input) => {
+    addDoc(collection(db,'tasks'),{
+        taskName:input,
+        creationDate: serverTimestamp(),
+        complete: false,
+        ownerId: getAuth().currentUser.uid,
+        ownerName: getAuth().currentUser.displayName,
+        type: 'todo',
+      })
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     saveTodo(input); // Save to firebase
-    // getTodos(); // Pull updated list of todos from firebase - I don't think we need this now we are attaching snapshot with useEffect
     setInput(""); // Update state for input field to empty string
   };
 
