@@ -13,8 +13,8 @@ function TodoList({ todos }) {
           {todos.map((data) => (
             <ListItem key={data.id}>
             <ListItemAvatar><Avatar><TaskIcon /></Avatar></ListItemAvatar>
-            <ListItemText primary={data.item.todo} />
-            <DeleteIcon fontSize="large" style={{opacity:0.7}} onClick={() => {deleteDoc(doc(db,'todos',data.id))}} />
+            <ListItemText primary={data.item.taskName} />
+            <DeleteIcon fontSize="large" style={{opacity:0.7}} onClick={() => {deleteDoc(doc(db,'tasks',data.id))}} />
             </ListItem>
           ))}
         </List>
