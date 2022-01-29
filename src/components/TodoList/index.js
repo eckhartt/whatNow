@@ -1,7 +1,8 @@
 import React from 'react';
 import { List , ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TaskIcon from '@mui/icons-material/Task';import {db} from '../Firebase.js';
+import TaskIcon from '@mui/icons-material/Task';
+import {db} from '../Firebase.js';
 import { doc, deleteDoc } from "firebase/firestore";
 // import './TodoList.css';
 

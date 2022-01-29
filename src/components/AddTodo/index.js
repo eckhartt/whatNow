@@ -3,19 +3,13 @@ import { TextField, Button } from '@mui/material';
 
 
 function AddTodo({ saveTodo, getTodos }) {
-  // Setup state for task input field 
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(""); // Setup state for task input field
 
-  // Setup submission handler 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`input is`,input);
-    // Save to firebase
-    saveTodo(input);
-    // Pull updated list of todos
-    getTodos();
-    // Update state
-    setInput("");
+    saveTodo(input); // Save to firebase
+    // getTodos(); // Pull updated list of todos from firebase - I don't think we need this now we are attaching snapshot with useEffect
+    setInput(""); // Update state for input field to empty string
   };
 
   return (
