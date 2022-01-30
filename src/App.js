@@ -1,19 +1,23 @@
-import React from "react";
-import AddTodo from './components/AddTodo';
-import TodoList from './components/TodoList';
-import { getAuth } from "firebase/auth";
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./pages/Layout";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import NoPage from "./pages/NoPage";
 
-function App() { 
-      return (
-        <div className="App">
-            <p>Welcome {getAuth().currentUser.displayName}! You are now signed-in!</p>
-            <button onClick={() => getAuth().signOut()}>Sign-out</button>
-            <h2>Current Items</h2>
-            <TodoList />
-            <h2>What Now?</h2>
-            <AddTodo />
-        </div>
+import AuthContextProvider from './components/Auth/AuthContextProvider'
+
+
+export default function App() {
+    return (
+      <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<AuthContextProvider><Home /></AuthContextProvider>} />
+              <Route path="login" element={<Login />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Routes>
+      </BrowserRouter>
     );
-}
-export default App;
+  }
