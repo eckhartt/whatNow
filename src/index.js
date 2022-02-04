@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App.js'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App.js";
 import "./components/Firebase";
 
 ReactDOM.render(
-<React.StrictMode>
+  <React.StrictMode>
     <App />
-</React.StrictMode>,
-document.getElementById('root')
+  </React.StrictMode>,
+  document.getElementById("root")
 );
