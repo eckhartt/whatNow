@@ -16,7 +16,6 @@ const AuthContextProvider: React.FC = ({ children }) => {
   // Looks for change in authentication status on firebase and then loads user state with details
   useEffect(() => {
     return onAuthStateChanged(getAuth(), (authResponse) => { // onAuthStateChanged, on change, returns authResponse object containing user data
-      console.log('authResponse is',authResponse)
       if (authResponse) { // If user data is returned, initialize app and put the returned data into User state 
         setIsInitialized(true);
         setUser({
