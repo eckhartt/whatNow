@@ -4,6 +4,7 @@ import { useContext } from "react";
 import AuthContext from "../components/Auth/AuthContext";
 import { Header, Footer, Main, Page } from "../components/Layout";
 import {Heading} from 'theme-ui'
+import SignOutButton from "../components/Auth/SignOutButton"
 
 const Layout = () => {
   const { user } = useContext(AuthContext); // Bring in user data from context
@@ -17,7 +18,7 @@ const Layout = () => {
         <Main>
             <Outlet />
         </Main>
-        <Footer>Footer</Footer>
+        <Footer>Footer <SignOutButton /></Footer>
       </Page>
     </>
   );

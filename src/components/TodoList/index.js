@@ -41,6 +41,7 @@ function TodoList() {
           }))
         );
         console.log(`currentFirebaseTodos[0] is`, currentFirebaseTodos[0]);
+        //TODO: Why are we accessing [0] ? Is it because we're using .push? Why can't we just access `currentFirebaseTodos`
         setTodos(currentFirebaseTodos[0]);
       }
     );

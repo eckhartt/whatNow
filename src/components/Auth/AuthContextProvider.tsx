@@ -1,10 +1,12 @@
 import { useCallback, useState, useEffect } from "react";
 import AuthContext, { User } from "./AuthContext";
-// import SignInButton from './SignInButton';
-// @ts-ignore
+// import SignInButton from './SignInButton'; // Don't need this as it has been included in <Login />
+// @ts-ignore -> TODO: Figure out why the following import TS errors
 import Login from "../../pages/Login";
 
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+
+// TODO: Figure out what ": React .FC" does. Is this TS? -> 'AuthContextProvider: React.FC'
 
 const AuthContextProvider: React.FC = ({ children }) => {
   // Accepts functional component as prop, checks user authentication status before deciding what to return
@@ -13,15 +15,15 @@ const AuthContextProvider: React.FC = ({ children }) => {
 
   // Looks for change in authentication status on firebase and then loads user state with details
   useEffect(() => {
-    const auth = getAuth();
-    return onAuthStateChanged(auth, (im) => {
-      if (im) {
+    return onAuthStateChanged(getAuth(), (authResponse) => { // onAuthStateChanged, on change, returns authResponse object containing user data
+      console.log('authResponse is',authResponse)
+      if (authResponse) { // If user data is returned, initialize app and put the returned data into User state 
         setIsInitialized(true);
         setUser({
-          displayName: im.displayName,
-          email: im.email,
-          photo: im.photoURL,
-          uid: im.uid,
+          displayName: authResponse.displayName,
+          email: authResponse.email,
+          photo: authResponse.photoURL,
+          uid: authResponse.uid,
         });
       } else {
         setIsInitialized(true);
@@ -37,7 +39,7 @@ const AuthContextProvider: React.FC = ({ children }) => {
     if (user === null) {
       return <Login />; // If user is null, return login page.
     }
-    return children; // Else, return the children.
+    return children; // Else, return the children passed into <AuthContextProvider>.
   }, [isInitialized, user, children]);
 
   return (

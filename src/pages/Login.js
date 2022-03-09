@@ -1,9 +1,8 @@
 import SignInButton from "../components/Auth/SignInButton";
-import AuthContext from "../components/Auth/AuthContext";
-import { useContext } from "react";
+import useAuthContext from "../components/Auth/useAuthContext";
 
 function Login() {
-  const { user } = useContext(AuthContext); // Bring in user data from context
+  const { user } = useAuthContext // Bring in user data from context
 
   if (user) {
     return <div>You are already logged in...</div>;

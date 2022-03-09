@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-export type User = {
+export type User = { // Defining 'User' type 
   displayName: null | string;
   email: null | string;
   photo: null | string;
